@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.AsignacionRequest;
 import com.example.backend.dto.ClienteDTO;
 import com.example.backend.dto.ClienteRequest;
 import com.example.backend.service.ClienteService;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -22,6 +23,11 @@ public class ClienteController {
     @GetMapping
     public List<ClienteDTO> listar() {
         return clienteService.listar();
+    }
+
+    @GetMapping("/{id}")
+    public ClienteDTO obtener(@PathVariable Long id) {
+        return clienteService.buscarPorId(id);
     }
 
     @PostMapping
@@ -39,5 +45,10 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) {
         clienteService.eliminar(id);
+    }
+
+    @PutMapping("/{id}/asignar")
+    public ClienteDTO asignar(@PathVariable Long id, @RequestBody @Valid AsignacionRequest request) {
+        return clienteService.asignar(id, request.getIdChofer(), request.getIdVehiculo());
     }
 }

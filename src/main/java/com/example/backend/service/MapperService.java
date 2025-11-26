@@ -22,6 +22,18 @@ public class MapperService {
         );
     }
 
+    public static EmpleadoDTO toEmpleadoDto(Empleado empleado) {
+        return new EmpleadoDTO(
+                empleado.getId(),
+                empleado.getNombre(),
+                empleado.getRut(),
+                empleado.getCorreo(),
+                empleado.getTelefono(),
+                empleado.getRol().name(),
+                null
+        );
+    }
+
     public static ClienteDTO toDto(Cliente cliente) {
         return new ClienteDTO(
                 cliente.getId().toString(),
@@ -72,6 +84,35 @@ public class MapperService {
                 orden.getEstado().name(),
                 orden.getFotos(),
                 orden.getObservacion()
+        );
+    }
+
+    public static VehiculoDTO toDto(Vehiculo vehiculo) {
+        return new VehiculoDTO(
+                vehiculo.getId(),
+                vehiculo.getMarca(),
+                vehiculo.getModelo(),
+                vehiculo.getPatente(),
+                vehiculo.getAnio(),
+                vehiculo.getCapacidad()
+        );
+    }
+
+    public static MaterialDTO toDto(Material material) {
+        return new MaterialDTO(
+                material.getId(),
+                material.getNombre(),
+                material.getDescripcion()
+        );
+    }
+
+    public static HistorialLaborDTO toDto(HistorialLabor historial) {
+        return new HistorialLaborDTO(
+                historial.getRutaId().toString(),
+                historial.getFecha(),
+                historial.getPuntosCompletados(),
+                historial.getObservacion(),
+                historial.getEmpleado().getId().intValue()
         );
     }
 }

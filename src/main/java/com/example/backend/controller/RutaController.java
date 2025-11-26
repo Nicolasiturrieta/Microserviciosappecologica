@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rutas")
 public class RutaController {
 
     private final RutaService rutaService;
@@ -18,28 +19,28 @@ public class RutaController {
         this.rutaService = rutaService;
     }
 
-    @GetMapping("/api/chofer/{choferId}/rutas")
+    @GetMapping("/chofer/{choferId}")
     public List<RutaDTO> rutasParaChofer(@PathVariable Long choferId) {
         return rutaService.rutasParaChofer(choferId);
     }
 
-    @GetMapping("/api/rutas/{rutaId}")
+    @GetMapping("/{rutaId}")
     public RutaDTO rutaPorId(@PathVariable Long rutaId) {
         return rutaService.buscarPorId(rutaId);
     }
 
-    @PostMapping("/api/rutas")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RutaDTO crear(@RequestBody @Valid RutaRequest request) {
         return rutaService.crear(request);
     }
 
-    @PutMapping("/api/rutas/{id}")
+    @PutMapping("/{id}")
     public RutaDTO actualizar(@PathVariable Long id, @RequestBody @Valid RutaRequest request) {
         return rutaService.actualizar(id, request);
     }
 
-    @DeleteMapping("/api/rutas/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) {
         rutaService.eliminar(id);

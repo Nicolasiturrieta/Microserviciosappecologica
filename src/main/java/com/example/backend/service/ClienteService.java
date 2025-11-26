@@ -26,6 +26,12 @@ public class ClienteService {
                 .collect(Collectors.toList());
     }
 
+    public ClienteDTO buscarPorId(Long id) {
+        return clienteRepository.findById(id)
+                .map(MapperService::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
+    }
+
     public ClienteDTO crear(ClienteRequest request) {
         Cliente cliente = new Cliente(
                 request.getNombreEmpresa(),
@@ -65,5 +71,13 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado");
         }
         clienteRepository.deleteById(id);
+    }
+
+    public ClienteDTO asignar(Long id, Long idChofer, Long idVehiculo) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
+        cliente.setIdChoferAsignado(idChofer);
+        cliente.setIdVehiculoAsignado(idVehiculo);
+        return MapperService.toDto(clienteRepository.save(cliente));
     }
 }
