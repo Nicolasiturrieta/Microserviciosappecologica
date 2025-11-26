@@ -1,8 +1,9 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.ComentarioRequest;
+import com.example.backend.dto.ComentarioRequestDTO;
+import com.example.backend.dto.CrearEmpleadoRequestDTO;
+import com.example.backend.dto.CrearEmpleadoResponseDTO;
 import com.example.backend.dto.EmpleadoDTO;
-import com.example.backend.dto.EmpleadoRequest;
 import com.example.backend.dto.HistorialLaborDTO;
 import com.example.backend.service.EmpleadoService;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class EmpleadoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmpleadoDTO crear(@RequestBody @Valid EmpleadoRequest request) {
+    public CrearEmpleadoResponseDTO crear(@RequestBody @Valid CrearEmpleadoRequestDTO request) {
         return empleadoService.crear(request);
     }
 
@@ -39,7 +40,7 @@ public class EmpleadoController {
 
     @PostMapping("/{id}/comentarios")
     @ResponseStatus(HttpStatus.CREATED)
-    public void comentar(@PathVariable Long id, @RequestBody @Valid ComentarioRequest request) {
+    public void comentar(@PathVariable Long id, @RequestBody @Valid ComentarioRequestDTO request) {
         empleadoService.agregarComentario(id, request);
     }
 }

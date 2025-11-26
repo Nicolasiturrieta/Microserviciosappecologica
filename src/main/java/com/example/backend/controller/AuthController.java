@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.LoginRequestDTO;
-import com.example.backend.dto.UsuarioDTO;
+import com.example.backend.dto.LoginResponseDTO;
 import com.example.backend.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public UsuarioDTO login(@RequestBody @Valid LoginRequestDTO requestDTO) {
+    public LoginResponseDTO login(@RequestBody @Valid LoginRequestDTO requestDTO) {
         return authService.login(requestDTO);
     }
 }

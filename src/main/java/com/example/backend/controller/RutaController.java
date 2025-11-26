@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.CrearRutaRequestDTO;
 import com.example.backend.dto.RutaDTO;
-import com.example.backend.dto.RutaRequest;
 import com.example.backend.service.RutaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,12 +31,12 @@ public class RutaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public RutaDTO crear(@RequestBody @Valid RutaRequest request) {
+    public RutaDTO crear(@RequestBody @Valid CrearRutaRequestDTO request) {
         return rutaService.crear(request);
     }
 
     @PutMapping("/{id}")
-    public RutaDTO actualizar(@PathVariable Long id, @RequestBody @Valid RutaRequest request) {
+    public RutaDTO actualizar(@PathVariable Long id, @RequestBody @Valid CrearRutaRequestDTO request) {
         return rutaService.actualizar(id, request);
     }
 

@@ -2,7 +2,7 @@ package com.example.backend.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class AsignacionRequest {
+public class AsignacionRequestDTO {
 
     @NotNull
     private Long idChofer;

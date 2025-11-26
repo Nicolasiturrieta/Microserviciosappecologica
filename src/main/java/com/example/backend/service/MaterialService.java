@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
 import com.example.backend.domain.Material;
+import com.example.backend.dto.CrearMaterialRequestDTO;
 import com.example.backend.dto.MaterialDTO;
-import com.example.backend.dto.MaterialRequest;
 import com.example.backend.repository.MaterialRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MaterialService {
         this.materialRepository = materialRepository;
     }
 
-    public MaterialDTO crear(MaterialRequest request) {
+    public MaterialDTO crear(CrearMaterialRequestDTO request) {
         Material material = new Material(request.getNombre(), request.getDescripcion());
         return MapperService.toDto(materialRepository.save(material));
     }
@@ -31,7 +31,7 @@ public class MaterialService {
                 .collect(Collectors.toList());
     }
 
-    public MaterialDTO actualizar(Long id, MaterialRequest request) {
+    public MaterialDTO actualizar(Long id, CrearMaterialRequestDTO request) {
         Material material = materialRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Material no encontrado"));
         material.setNombre(request.getNombre());

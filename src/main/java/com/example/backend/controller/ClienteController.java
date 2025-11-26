@@ -1,8 +1,9 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.AsignacionRequest;
 import com.example.backend.dto.ClienteDTO;
-import com.example.backend.dto.ClienteRequest;
+import com.example.backend.dto.AsignacionRequestDTO;
+import com.example.backend.dto.CrearClienteRequestDTO;
+import com.example.backend.dto.CrearClienteResponseDTO;
 import com.example.backend.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,12 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClienteDTO crear(@RequestBody @Valid ClienteRequest request) {
+    public CrearClienteResponseDTO crear(@RequestBody @Valid CrearClienteRequestDTO request) {
         return clienteService.crear(request);
     }
 
     @PutMapping("/{id}")
-    public ClienteDTO actualizar(@PathVariable Long id, @RequestBody @Valid ClienteRequest request) {
+    public ClienteDTO actualizar(@PathVariable Long id, @RequestBody @Valid CrearClienteRequestDTO request) {
         return clienteService.actualizar(id, request);
     }
 
@@ -48,7 +49,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}/asignar")
-    public ClienteDTO asignar(@PathVariable Long id, @RequestBody @Valid AsignacionRequest request) {
+    public ClienteDTO asignar(@PathVariable Long id, @RequestBody @Valid AsignacionRequestDTO request) {
         return clienteService.asignar(id, request.getIdChofer(), request.getIdVehiculo());
     }
 }

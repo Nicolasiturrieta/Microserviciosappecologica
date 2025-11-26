@@ -1,7 +1,23 @@
 package com.example.backend.service;
 
-import com.example.backend.domain.*;
-import com.example.backend.dto.*;
+import com.example.backend.domain.Cliente;
+import com.example.backend.domain.Empleado;
+import com.example.backend.domain.HistorialLabor;
+import com.example.backend.domain.Material;
+import com.example.backend.domain.OrdenServicio;
+import com.example.backend.domain.PuntoRecoleccion;
+import com.example.backend.domain.Ruta;
+import com.example.backend.domain.Vehiculo;
+import com.example.backend.dto.ClienteDTO;
+import com.example.backend.dto.CrearClienteResponseDTO;
+import com.example.backend.dto.CrearEmpleadoResponseDTO;
+import com.example.backend.dto.EmpleadoDTO;
+import com.example.backend.dto.HistorialLaborDTO;
+import com.example.backend.dto.MaterialDTO;
+import com.example.backend.dto.OrdenServicioDTO;
+import com.example.backend.dto.PuntoDTO;
+import com.example.backend.dto.RutaDTO;
+import com.example.backend.dto.VehiculoDTO;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,17 +26,6 @@ import java.util.stream.Collectors;
 public class MapperService {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
-
-    public static UsuarioDTO toDto(Empleado empleado) {
-        return new UsuarioDTO(
-                empleado.getId().toString(),
-                empleado.getNombre(),
-                empleado.getRut(),
-                empleado.getTelefono(),
-                empleado.getCorreo(),
-                empleado.getRol().name()
-        );
-    }
 
     public static EmpleadoDTO toEmpleadoDto(Empleado empleado) {
         return new EmpleadoDTO(
@@ -34,9 +39,21 @@ public class MapperService {
         );
     }
 
+    public static CrearEmpleadoResponseDTO toCrearEmpleadoResponseDto(Empleado empleado) {
+        return new CrearEmpleadoResponseDTO(
+                Math.toIntExact(empleado.getId()),
+                empleado.getNombre(),
+                empleado.getRut(),
+                empleado.getCorreo(),
+                empleado.getTelefono(),
+                empleado.getRol().name(),
+                null
+        );
+    }
+
     public static ClienteDTO toDto(Cliente cliente) {
         return new ClienteDTO(
-                cliente.getId().toString(),
+                Math.toIntExact(cliente.getId()),
                 cliente.getNombreEmpresa(),
                 cliente.getRut(),
                 cliente.getDireccion(),
@@ -47,6 +64,20 @@ public class MapperService {
                 cliente.getFotoUri(),
                 cliente.getIdChoferAsignado(),
                 cliente.getIdVehiculoAsignado()
+        );
+    }
+
+    public static CrearClienteResponseDTO toCrearClienteResponseDto(Cliente cliente) {
+        return new CrearClienteResponseDTO(
+                Math.toIntExact(cliente.getId()),
+                cliente.getNombreEmpresa(),
+                cliente.getRut(),
+                cliente.getDireccion(),
+                cliente.getTelefono(),
+                cliente.getCorreo(),
+                cliente.getMaterial(),
+                cliente.getFrecuencia(),
+                cliente.getFotoUri()
         );
     }
 

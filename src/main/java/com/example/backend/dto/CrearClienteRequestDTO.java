@@ -2,7 +2,8 @@ package com.example.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class ClienteRequest {
+public class CrearClienteRequestDTO {
+
     @NotBlank
     private String nombreEmpresa;
     @NotBlank
@@ -18,8 +19,6 @@ public class ClienteRequest {
     @NotBlank
     private String frecuencia;
     private String fotoUri;
-    private Long idChoferAsignado;
-    private Long idVehiculoAsignado;
 
     public String getNombreEmpresa() {
         return nombreEmpresa;
@@ -83,21 +82,5 @@ public class ClienteRequest {
 
     public void setFotoUri(String fotoUri) {
         this.fotoUri = fotoUri;
-    }
-
-    public Long getIdChoferAsignado() {
-        return idChoferAsignado;
-    }
-
-    public void setIdChoferAsignado(Long idChoferAsignado) {
-        this.idChoferAsignado = idChoferAsignado;
-    }
-
-    public Long getIdVehiculoAsignado() {
-        return idVehiculoAsignado;
-    }
-
-    public void setIdVehiculoAsignado(Long idVehiculoAsignado) {
-        this.idVehiculoAsignado = idVehiculoAsignado;
     }
 }

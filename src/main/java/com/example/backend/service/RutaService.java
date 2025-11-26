@@ -1,17 +1,17 @@
 package com.example.backend.service;
 
 import com.example.backend.domain.Empleado;
-import com.example.backend.domain.PuntoRecoleccion;
 import com.example.backend.domain.Ruta;
+import com.example.backend.dto.CrearRutaRequestDTO;
 import com.example.backend.dto.RutaDTO;
-import com.example.backend.dto.RutaRequest;
 import com.example.backend.repository.EmpleadoRepository;
 import com.example.backend.repository.RutaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +20,10 @@ public class RutaService {
 
     private final RutaRepository rutaRepository;
     private final EmpleadoRepository empleadoRepository;
-    private final PuntoService puntoService;
 
-    public RutaService(RutaRepository rutaRepository, EmpleadoRepository empleadoRepository, PuntoService puntoService) {
+    public RutaService(RutaRepository rutaRepository, EmpleadoRepository empleadoRepository) {
         this.rutaRepository = rutaRepository;
         this.empleadoRepository = empleadoRepository;
-        this.puntoService = puntoService;
     }
 
     public List<RutaDTO> rutasParaChofer(Long choferId) {
@@ -40,35 +38,29 @@ public class RutaService {
         return MapperService.toDto(ruta);
     }
 
-    public RutaDTO crear(RutaRequest request) {
-        Empleado chofer = empleadoRepository.findById(request.getChoferId())
+    public RutaDTO crear(CrearRutaRequestDTO request) {
+        Long choferId = Long.parseLong(request.getIdChoferAsignado());
+        Empleado chofer = empleadoRepository.findById(choferId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chofer no encontrado"));
 
-        Ruta ruta = new Ruta(request.getNombre(), request.getFecha(), request.getEstado(), chofer);
-        if (request.getPuntoIds() != null) {
-            List<PuntoRecoleccion> puntos = request.getPuntoIds().stream()
-                    .map(puntoService::buscarPorId)
-                    .collect(Collectors.toCollection(ArrayList::new));
-            ruta.setPuntos(puntos);
-        }
+        LocalDate fecha = LocalDate.parse(request.getFecha(), DateTimeFormatter.ISO_LOCAL_DATE);
+        Ruta ruta = new Ruta(request.getNombre(), fecha, request.getEstado(), chofer);
+
         return MapperService.toDto(rutaRepository.save(ruta));
     }
 
-    public RutaDTO actualizar(Long id, RutaRequest request) {
+    public RutaDTO actualizar(Long id, CrearRutaRequestDTO request) {
         Ruta ruta = rutaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ruta no encontrada"));
-        Empleado chofer = empleadoRepository.findById(request.getChoferId())
+        Long choferId = Long.parseLong(request.getIdChoferAsignado());
+        Empleado chofer = empleadoRepository.findById(choferId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chofer no encontrado"));
 
+        LocalDate fecha = LocalDate.parse(request.getFecha(), DateTimeFormatter.ISO_LOCAL_DATE);
         ruta.setNombre(request.getNombre());
-        ruta.setFecha(request.getFecha());
+        ruta.setFecha(fecha);
         ruta.setEstado(request.getEstado());
         ruta.setChofer(chofer);
-
-        List<PuntoRecoleccion> puntos = request.getPuntoIds() == null ? new ArrayList<>() : request.getPuntoIds().stream()
-                .map(puntoService::buscarPorId)
-                .collect(Collectors.toCollection(ArrayList::new));
-        ruta.setPuntos(puntos);
 
         return MapperService.toDto(rutaRepository.save(ruta));
     }

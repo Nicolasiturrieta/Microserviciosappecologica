@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.CrearMaterialRequestDTO;
 import com.example.backend.dto.MaterialDTO;
-import com.example.backend.dto.MaterialRequest;
 import com.example.backend.service.MaterialService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class MaterialController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MaterialDTO crear(@RequestBody @Valid MaterialRequest request) {
+    public MaterialDTO crear(@RequestBody @Valid CrearMaterialRequestDTO request) {
         return materialService.crear(request);
     }
 
@@ -31,7 +31,7 @@ public class MaterialController {
     }
 
     @PutMapping("/{id}")
-    public MaterialDTO actualizar(@PathVariable Long id, @RequestBody @Valid MaterialRequest request) {
+    public MaterialDTO actualizar(@PathVariable Long id, @RequestBody @Valid CrearMaterialRequestDTO request) {
         return materialService.actualizar(id, request);
     }
 

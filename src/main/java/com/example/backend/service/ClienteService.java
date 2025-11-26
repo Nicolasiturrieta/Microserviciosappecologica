@@ -2,7 +2,8 @@ package com.example.backend.service;
 
 import com.example.backend.domain.Cliente;
 import com.example.backend.dto.ClienteDTO;
-import com.example.backend.dto.ClienteRequest;
+import com.example.backend.dto.CrearClienteRequestDTO;
+import com.example.backend.dto.CrearClienteResponseDTO;
 import com.example.backend.repository.ClienteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class ClienteService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
     }
 
-    public ClienteDTO crear(ClienteRequest request) {
+    public CrearClienteResponseDTO crear(CrearClienteRequestDTO request) {
         Cliente cliente = new Cliente(
                 request.getNombreEmpresa(),
                 request.getRut(),
@@ -42,13 +43,13 @@ public class ClienteService {
                 request.getMaterial(),
                 request.getFrecuencia(),
                 request.getFotoUri(),
-                request.getIdChoferAsignado(),
-                request.getIdVehiculoAsignado()
+                null,
+                null
         );
-        return MapperService.toDto(clienteRepository.save(cliente));
+        return MapperService.toCrearClienteResponseDto(clienteRepository.save(cliente));
     }
 
-    public ClienteDTO actualizar(Long id, ClienteRequest request) {
+    public ClienteDTO actualizar(Long id, CrearClienteRequestDTO request) {
         Cliente existente = clienteRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
 
@@ -60,8 +61,6 @@ public class ClienteService {
         existente.setMaterial(request.getMaterial());
         existente.setFrecuencia(request.getFrecuencia());
         existente.setFotoUri(request.getFotoUri());
-        existente.setIdChoferAsignado(request.getIdChoferAsignado());
-        existente.setIdVehiculoAsignado(request.getIdVehiculoAsignado());
 
         return MapperService.toDto(clienteRepository.save(existente));
     }

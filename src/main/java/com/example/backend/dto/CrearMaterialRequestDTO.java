@@ -2,7 +2,7 @@ package com.example.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class MaterialRequest {
+public class CrearMaterialRequestDTO {
     @NotBlank
     private String nombre;
     private String descripcion;

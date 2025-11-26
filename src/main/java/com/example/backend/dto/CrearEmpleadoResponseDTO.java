@@ -1,23 +1,25 @@
 package com.example.backend.dto;
 
-public class UsuarioDTO {
-    private String id;
+public class CrearEmpleadoResponseDTO {
+    private Integer id;
     private String nombre;
     private String rut;
-    private String telefono;
     private String correo;
+    private String telefono;
     private String rol;
+    private String fotoUri;
 
-    public UsuarioDTO(String id, String nombre, String rut, String telefono, String correo, String rol) {
+    public CrearEmpleadoResponseDTO(Integer id, String nombre, String rut, String correo, String telefono, String rol, String fotoUri) {
         this.id = id;
         this.nombre = nombre;
         this.rut = rut;
-        this.telefono = telefono;
         this.correo = correo;
+        this.telefono = telefono;
         this.rol = rol;
+        this.fotoUri = fotoUri;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -29,15 +31,19 @@ public class UsuarioDTO {
         return rut;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
     public String getCorreo() {
         return correo;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
     public String getRol() {
         return rol;
+    }
+
+    public String getFotoUri() {
+        return fotoUri;
     }
 }

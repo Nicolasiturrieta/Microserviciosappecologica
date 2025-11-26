@@ -2,7 +2,8 @@ package com.example.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClienteDTO {
+public class CrearClienteResponseDTO {
+
     @JsonProperty("idcliente")
     private Integer idCliente;
     private String nombreEmpresa;
@@ -13,12 +14,9 @@ public class ClienteDTO {
     private String material;
     private String frecuencia;
     private String fotoUri;
-    private Long idChoferAsignado;
-    private Long idVehiculoAsignado;
 
-    public ClienteDTO(Integer idCliente, String nombreEmpresa, String rut, String direccion, String telefono,
-                      String correo, String material, String frecuencia, String fotoUri,
-                      Long idChoferAsignado, Long idVehiculoAsignado) {
+    public CrearClienteResponseDTO(Integer idCliente, String nombreEmpresa, String rut, String direccion,
+                                   String telefono, String correo, String material, String frecuencia, String fotoUri) {
         this.idCliente = idCliente;
         this.nombreEmpresa = nombreEmpresa;
         this.rut = rut;
@@ -28,8 +26,6 @@ public class ClienteDTO {
         this.material = material;
         this.frecuencia = frecuencia;
         this.fotoUri = fotoUri;
-        this.idChoferAsignado = idChoferAsignado;
-        this.idVehiculoAsignado = idVehiculoAsignado;
     }
 
     public Integer getIdCliente() {
@@ -66,13 +62,5 @@ public class ClienteDTO {
 
     public String getFotoUri() {
         return fotoUri;
-    }
-
-    public Long getIdChoferAsignado() {
-        return idChoferAsignado;
-    }
-
-    public Long getIdVehiculoAsignado() {
-        return idVehiculoAsignado;
     }
 }

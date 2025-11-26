@@ -3,7 +3,7 @@ package com.example.backend.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class VehiculoRequest {
+public class CrearVehiculoRequestDTO {
     @NotBlank
     private String marca;
     @NotBlank

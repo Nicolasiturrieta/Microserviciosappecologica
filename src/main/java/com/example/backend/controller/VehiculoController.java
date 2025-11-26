@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.CrearVehiculoRequestDTO;
 import com.example.backend.dto.VehiculoDTO;
-import com.example.backend.dto.VehiculoRequest;
 import com.example.backend.service.VehiculoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class VehiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VehiculoDTO crear(@RequestBody @Valid VehiculoRequest request) {
+    public VehiculoDTO crear(@RequestBody @Valid CrearVehiculoRequestDTO request) {
         return vehiculoService.crear(request);
     }
 
@@ -31,7 +31,7 @@ public class VehiculoController {
     }
 
     @PutMapping("/{id}")
-    public VehiculoDTO actualizar(@PathVariable Long id, @RequestBody @Valid VehiculoRequest request) {
+    public VehiculoDTO actualizar(@PathVariable Long id, @RequestBody @Valid CrearVehiculoRequestDTO request) {
         return vehiculoService.actualizar(id, request);
     }
 
