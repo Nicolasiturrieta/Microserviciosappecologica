@@ -20,7 +20,7 @@ public class AuthService {
     public UsuarioDTO login(LoginRequestDTO requestDTO) {
         Empleado empleado = empleadoRepository.findByRut(requestDTO.getRut())
                 .filter(e -> e.getPassword().equals(requestDTO.getPassword()))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales invalidas"));
 
         return MapperService.toDto(empleado);
     }

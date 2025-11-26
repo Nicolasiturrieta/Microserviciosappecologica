@@ -36,18 +36,14 @@ public class OrdenService {
     }
 
     public OrdenServicioDTO iniciarOrden(Long puntoId) {
-        OrdenServicio orden = ordenRepository.findAll().stream()
-                .filter(os -> os.getPunto().getId().equals(puntoId))
-                .findFirst()
+        OrdenServicio orden = ordenRepository.findByPunto_Id(puntoId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orden no encontrada"));
         orden.setEstado(OrdenEstado.EN_PROCESO);
         return MapperService.toDto(ordenRepository.save(orden));
     }
 
     public OrdenServicioDTO finalizarOrden(Long puntoId, FinalizarOrdenRequestDTO request) {
-        OrdenServicio orden = ordenRepository.findAll().stream()
-                .filter(os -> os.getPunto().getId().equals(puntoId))
-                .findFirst()
+        OrdenServicio orden = ordenRepository.findByPunto_Id(puntoId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orden no encontrada"));
         orden.setEstado(OrdenEstado.COMPLETADA);
         orden.setObservacion(request.getObservacion());

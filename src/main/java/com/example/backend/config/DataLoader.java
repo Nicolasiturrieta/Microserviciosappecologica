@@ -28,13 +28,13 @@ public class DataLoader {
             empleadoRepository.saveAll(List.of(chofer, admin));
 
             Cliente cliente1 = new Cliente("Eco Plast", "76.111.222-3", "Av. Central 123", "22223333", "contacto@ecoplast.cl",
-                    "Plástico", "Semanal", null, chofer.getId(), null);
+                    "Plastico", "Semanal", null, chofer.getId(), null);
             Cliente cliente2 = new Cliente("Bio Vidrio", "77.222.333-4", "Camino Verde 456", "22224444", "ventas@biovidrio.cl",
                     "Vidrio", "Mensual", null, chofer.getId(), null);
             clienteRepository.saveAll(List.of(cliente1, cliente2));
 
-            PuntoRecoleccion punto1 = new PuntoRecoleccion(cliente1, "Av. Central 123", "Plástico", "Contenedor azul", "Retiro en bodega");
-            PuntoRecoleccion punto2 = new PuntoRecoleccion(cliente2, "Camino Verde 456", "Vidrio", "Jaula", "Precaución en acceso");
+            PuntoRecoleccion punto1 = new PuntoRecoleccion(cliente1, "Av. Central 123", "Plastico", "Contenedor azul", "Retiro en bodega");
+            PuntoRecoleccion punto2 = new PuntoRecoleccion(cliente2, "Camino Verde 456", "Vidrio", "Jaula", "Precaucion en acceso");
             puntoRepository.saveAll(List.of(punto1, punto2));
 
             Ruta ruta = new Ruta("Ruta Norte", LocalDate.now(), "PENDIENTE", chofer);
