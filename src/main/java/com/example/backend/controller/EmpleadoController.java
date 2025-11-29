@@ -50,4 +50,11 @@ public class EmpleadoController {
         // Devuelve una respuesta 204 No Content, que es estándar para actualizaciones exitosas sin cuerpo.
         return ResponseEntity.noContent().build();
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        // Aquí llamas a un método en tu EmpleadoService para la lógica de borrado
+        empleadoService.eliminar(id);
+        // Devuelve una respuesta 204 No Content, estándar para eliminaciones exitosas.
+        return ResponseEntity.noContent().build();
+    }
 }

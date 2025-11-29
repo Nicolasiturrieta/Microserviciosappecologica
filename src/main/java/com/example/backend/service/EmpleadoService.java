@@ -63,4 +63,33 @@ public class EmpleadoService {
         HistorialLabor comentario = new HistorialLabor(0L, LocalDate.now(), 0, request.getComentario(), empleado);
         historialLaborRepository.save(comentario);
     }
+
+    @Override
+    public void eliminar(Long id) {
+        // 1. Verifica si el empleado existe antes de intentar borrarlo.
+        if (!empleadoRepository.existsById(id)) {
+            throw new EntityNotFoundException("Empleado no encontrado con id: " + id);
+        }
+        // 2. Si existe, lo elimina de la base de datos.
+        empleadoRepository.deleteById(id);
+    }
+    public void actualizar(Long id, EmpleadoDTO empleadoDTO) {
+        // 1. Verifica si el empleado existe antes de intentar actualizarlo.
+        Empleado empleadoExistente = empleadoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con id: " + id));
+
+        // 2. Actualiza los campos del empleado existente con los valores del DTO.
+        empleadoExistente.setNombre(empleadoDTO.getNombre());
+        empleadoExistente.setRut(empleadoDTO.getRut());
+        empleadoExistente.setTelefono(empleadoDTO.getTelefono());
+        empleadoExistente.setCorreo(empleadoDTO.getCorreo());
+        // Si el rol es parte del DTO y puede ser actualizado, inclúyelo también.
+        if (empleadoDTO.getRol() != null) {
+            empleadoExistente.setRol(UserRole.valueOf(empleadoDTO.getRol()));
+        }
+
+        // 3. Guarda los cambios en la base de datos.
+        empleadoRepository.save(empleadoExistente);
+    }
+
 }
