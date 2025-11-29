@@ -43,4 +43,11 @@ public class EmpleadoController {
     public void comentar(@PathVariable Long id, @RequestBody @Valid ComentarioRequestDTO request) {
         empleadoService.agregarComentario(id, request);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> actualizar(@PathVariable Long id, @RequestBody @Valid EmpleadoDTO empleadoDTO) {
+        // Aquí llamas a un método en tu EmpleadoService que se encargue de la lógica de actualización
+        empleadoService.actualizar(id, empleadoDTO);
+        // Devuelve una respuesta 204 No Content, que es estándar para actualizaciones exitosas sin cuerpo.
+        return ResponseEntity.noContent().build();
+    }
 }
