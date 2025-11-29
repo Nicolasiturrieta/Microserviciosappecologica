@@ -9,6 +9,9 @@ public class EmpleadoDTO {
     private String rol;
     private String fotoUri;
 
+    public EmpleadoDTO() {
+    }
+
     public EmpleadoDTO(Long id, String nombre, String rut, String correo, String telefono, String rol, String fotoUri) {
         this.id = id;
         this.nombre = nombre;
@@ -45,5 +48,33 @@ public class EmpleadoDTO {
 
     public String getFotoUri() {
         return fotoUri;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public void setFotoUri(String fotoUri) {
+        this.fotoUri = fotoUri;
     }
 }

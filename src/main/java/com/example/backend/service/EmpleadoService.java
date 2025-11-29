@@ -64,31 +64,29 @@ public class EmpleadoService {
         historialLaborRepository.save(comentario);
     }
 
-    @Override
     public void eliminar(Long id) {
-        // 1. Verifica si el empleado existe antes de intentar borrarlo.
         if (!empleadoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Empleado no encontrado con id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado");
         }
-        // 2. Si existe, lo elimina de la base de datos.
         empleadoRepository.deleteById(id);
     }
-    public void actualizar(Long id, EmpleadoDTO empleadoDTO) {
-        // 1. Verifica si el empleado existe antes de intentar actualizarlo.
-        Empleado empleadoExistente = empleadoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con id: " + id));
 
-        // 2. Actualiza los campos del empleado existente con los valores del DTO.
+    public void actualizar(Long id, EmpleadoDTO empleadoDTO) {
+        Empleado empleadoExistente = empleadoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado"));
+
         empleadoExistente.setNombre(empleadoDTO.getNombre());
         empleadoExistente.setRut(empleadoDTO.getRut());
         empleadoExistente.setTelefono(empleadoDTO.getTelefono());
         empleadoExistente.setCorreo(empleadoDTO.getCorreo());
-        // Si el rol es parte del DTO y puede ser actualizado, inclúyelo también.
         if (empleadoDTO.getRol() != null) {
-            empleadoExistente.setRol(UserRole.valueOf(empleadoDTO.getRol()));
+            try {
+                empleadoExistente.setRol(UserRole.valueOf(empleadoDTO.getRol()));
+            } catch (IllegalArgumentException ex) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Rol no valido");
+            }
         }
 
-        // 3. Guarda los cambios en la base de datos.
         empleadoRepository.save(empleadoExistente);
     }
 

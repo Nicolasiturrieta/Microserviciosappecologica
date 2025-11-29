@@ -8,6 +8,7 @@ import com.example.backend.dto.HistorialLaborDTO;
 import com.example.backend.service.EmpleadoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,18 +44,16 @@ public class EmpleadoController {
     public void comentar(@PathVariable Long id, @RequestBody @Valid ComentarioRequestDTO request) {
         empleadoService.agregarComentario(id, request);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> actualizar(@PathVariable Long id, @RequestBody @Valid EmpleadoDTO empleadoDTO) {
-        // Aquí llamas a un método en tu EmpleadoService que se encargue de la lógica de actualización
         empleadoService.actualizar(id, empleadoDTO);
-        // Devuelve una respuesta 204 No Content, que es estándar para actualizaciones exitosas sin cuerpo.
         return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        // Aquí llamas a un método en tu EmpleadoService para la lógica de borrado
         empleadoService.eliminar(id);
-        // Devuelve una respuesta 204 No Content, estándar para eliminaciones exitosas.
         return ResponseEntity.noContent().build();
     }
 }
