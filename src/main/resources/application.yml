@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://tramway.proxy.rlwy.net:59870/railway?useSSL=true&serverTimezone=UTC&connectTimeout=30000
+    url: jdbc:mysql://tramway.proxy.rlwy.net:59870/railway?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=30000
     username: root
     password: XlOXlbiBmYXfhQxyXcYkHkUFzMqNVykM
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,9 +11,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
 server:
