@@ -11,6 +11,7 @@ import com.example.backend.dto.HistorialLaborDTO;
 import com.example.backend.repository.EmpleadoRepository;
 import com.example.backend.repository.HistorialLaborRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,10 +24,12 @@ public class EmpleadoService {
 
     private final EmpleadoRepository empleadoRepository;
     private final HistorialLaborRepository historialLaborRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public EmpleadoService(EmpleadoRepository empleadoRepository, HistorialLaborRepository historialLaborRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository, HistorialLaborRepository historialLaborRepository, PasswordEncoder passwordEncoder) {
         this.empleadoRepository = empleadoRepository;
         this.historialLaborRepository = historialLaborRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<EmpleadoDTO> listar() {
@@ -37,12 +40,18 @@ public class EmpleadoService {
 
     public CrearEmpleadoResponseDTO crear(CrearEmpleadoRequestDTO request) {
         UserRole rol = UserRole.valueOf(request.getRol());
+        String rawPassword = request.getPassword();
+        if (rawPassword == null || rawPassword.isBlank()) {
+            // Mantiene compatibilidad: si no envían password usamos el RUT como valor por defecto
+            rawPassword = request.getRut();
+        }
+        String encodedPassword = passwordEncoder.encode(rawPassword);
         Empleado empleado = new Empleado(
                 request.getNombre(),
                 request.getRut(),
                 request.getTelefono(),
                 request.getCorreo(),
-                "demo",
+                encodedPassword,
                 rol
         );
         return MapperService.toCrearEmpleadoResponseDto(empleadoRepository.save(empleado));

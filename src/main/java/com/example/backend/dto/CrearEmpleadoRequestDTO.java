@@ -16,6 +16,7 @@ public class CrearEmpleadoRequestDTO {
     @NotBlank
     private String rol;
     private String fotoUri;
+    private String password;
 
     public String getNombre() {
         return nombre;
@@ -39,5 +40,9 @@ public class CrearEmpleadoRequestDTO {
 
     public String getFotoUri() {
         return fotoUri;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
