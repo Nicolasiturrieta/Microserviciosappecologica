@@ -86,8 +86,9 @@ public class AuthService {
         dto.setId(empleado.getId());
         dto.setRut(empleado.getRut());
         dto.setNombre(empleado.getNombre());
-        dto.setEmail(empleado.getEmail());
-        dto.setRol(empleado.getRol());
+        dto.setCorreo(empleado.getCorreo());
+        dto.setTelefono(empleado.getTelefono());
+        dto.setRol(empleado.getRol() != null ? empleado.getRol().name() : null);
         return dto;
     }
 }
